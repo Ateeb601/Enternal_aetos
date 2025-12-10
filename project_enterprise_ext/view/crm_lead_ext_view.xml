@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_ext_form_view" model="ir.ui.view">
+            <field name="name">crm.lead.ext.form.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='lost_reason_id']" position="before">
+                        <field name="contact_name"/>
+                        <field name="title" placeholder="Title" domain="[]" options="{'no_open': True}"/>
+                        <field name="function"/>
+                        <field name="mobile"/>
+                </xpath>
+
+
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="partner_name"/>
+                    <field name="source_id"/>
+                    <field name="referred"/>
+                </xpath>
+
+                <xpath expr="//page[@name='lead']//field[@name='partner_name']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='contact_name']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='function']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='mobile']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='source_id']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='referred']" position="replace"/>
+                <xpath expr="//page[@name='lead']//field[@name='title']" position="replace"/>
+                <xpath expr="//page[@name='lead']//label[@for='contact_name_page_lead']" position="replace"/>
+                <xpath expr="//page[@name='lead']//label[@for='mobile_page_lead']" position="replace"/>
+
+            </field>
+        </record>
+    </data>
+</odoo>

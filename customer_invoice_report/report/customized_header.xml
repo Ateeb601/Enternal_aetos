@@ -1,0 +1,48 @@
+<odoo>
+    <template id="customer_invoice_report_customized_header">
+        <div class="header">
+            <div class="o_clean_header">
+                <div class="row">
+                    <div class="col-7" style="margin-left:-5px;">
+                        <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" alt="Logo"
+                             width="250px" height="50px"/>
+                    </div>
+                    <div class="col-5" name="company_address" style="font-size:14px; text-align:right;margin-top:-3px;margin-left:4px;">
+                        <ul class="list-unstyled">
+                            <strong>
+                                <li t-if="res_company.name">
+                                    <span t-field="res_company.name"/>
+                                </li>
+                            </strong>
+                                <li>
+                                    <span t-field="res_company.street"/>
+                                    <span t-field="res_company.street2"/>
+                                </li>
+                                <li t-if="res_company.city">
+                                    <span t-field="res_company.city"/>
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="customer_invoice_report_customized_footer">
+        <div class="footer">
+            <div class="row" style="font-size:11px;font-family:'Roboto',sans-serif;color:#40a4d5;">
+                <div class="col-4 text-center" style="margin-top:0px;">
+                    <span>Printed By:
+                        <span t-esc="request.env.user.name"/>
+                    </span>
+                </div>
+                <div class="col-4 text-center" style="margin-top:0px;"/>
+                <div class="col-4 text-center" style="margin-top:0px;">
+                    <span>Print Date:
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

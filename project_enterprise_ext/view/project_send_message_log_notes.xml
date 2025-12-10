@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+    <!--        &lt;!&ndash; list View: Logs &ndash;&gt;-->
+    <record id="view_log_notes_list" model="ir.ui.view">
+        <field name="name">mail.message.logs.list</field>
+        <field name="model">mail.message</field>
+        <field name="arch" type="xml">
+            <list string="Logs">
+                <field name="date"/>
+                <field name="author_id"/>
+                <!--                    <field name="subject"/>-->
+                <field name="body" widget="html"/>
+                <field name="subtype_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!--        &lt;!&ndash; list View: Send Messages &ndash;&gt;-->
+    <record id="view_send_messages_list" model="ir.ui.view">
+        <field name="name">mail.message.send.messages.list</field>
+        <field name="model">mail.message</field>
+        <field name="arch" type="xml">
+            <list string="Send Messages">
+                <field name="date" string="Date/Time"/>
+                <field name="author_id" string="Author"/>
+                <field name="subject" string="Subject"/>
+                <field name="body" string="Content" widget="html"/>
+                <field name="message_type" string="Message Type"/>
+                <!--                    <field name="model" string="Related Model"/>-->
+                <!--                    <field name="res_id" string="Related Record ID"/>-->
+            </list>
+        </field>
+    </record>
+
+
+    <!--        &lt;!&ndash; Action: View Logs &ndash;&gt;-->
+    <record id="action_view_logs_list" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="res_model">mail.message</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_enterprise_ext.view_log_notes_list"/>
+        <!--        <field name="domain">[('model', '=', 'project.task'), ('res_id', '=', active_id), ('message_type', '=',-->
+        <!--            'notification')]-->
+        <!--        </field>-->
+        <field name="domain">
+            [('model', '=', 'project.task'),
+            ('res_id', '=', active_id),
+            '|',
+            ('message_type', '=', 'notification'),
+            ('subtype_id.internal', '=', True)]
+        </field>
+    </record>
+
+    <!-- Action: View Send Messages -->
+    <record id="action_view_send_messages_list" model="ir.actions.act_window">
+        <field name="name">Send Messages</field>
+        <field name="res_model">mail.message</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="project_enterprise_ext.view_send_messages_list"/>
+        <!--            <field name="domain">[('model', '=', 'project.task'), ('res_id', '=', active_id), ('message_type', '=',-->
+        <!--                'notification')]-->
+        <!--            </field>-->
+        <field name="domain">
+            [('model', '=', 'project.task'),
+            ('res_id', '=', active_id),
+            ('message_type', 'in', ['comment']),
+            ('subtype_id.internal', '=', False)]
+        </field>
+    </record>
+
+
+
+
+    <record id="project_task_form_inherit_log_buttons" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.logs.buttons</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box' and @name='button_box']/span[@id='start_rating_buttons']"
+                   position="before">
+
+                <button name="%(project_enterprise_ext.action_view_logs_list)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-comments"
+                        string="Logs">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Logs</span>
+                    </div>
+                </button>
+
+                <button name="%(project_enterprise_ext.action_view_send_messages_list)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-envelope"
+                        string="Send Messages">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Messages</span>
+                    </div>
+                </button>
+
+            </xpath>
+        </field>
+    </record>
+
+
+
+    </data>
+</odoo>
