@@ -15,7 +15,6 @@ class ProjectTask(models.Model):
     def _compute_ticket_count(self):
         for record in self:
             record.ticket_count = len(record.ticket_ids)
-
             record.todo_ticket_count = len(
                 record.ticket_ids.filtered(
                     lambda t: not (t.stage_id and getattr(t.stage_id, 'is_closed', False))
